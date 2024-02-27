@@ -1,2 +1,38 @@
 # Path-diagram
 Creation of the path diagram in R
+setwd("E:/Fertility problems in Mung bean/Mung Final analysis Folder")
+Bikas<-read.csv("E:/Fertility problems in Mung bean/Mung Final analysis Folder/MFA.csv", header = TRUE)
+attach(Bikas)
+print(Bikas)
+library(GGally)
+colnames(Bikas)
+##for the aalyis of the path coeeficent 
+Bikas$REP=as.factor(REP)
+Bikas$VAR=as.factor(VAR)
+##3model speficfications
+library(lavaan)
+library(semPlot)
+# Define your path model
+mod <- 'Yield =~ PH30DAS + X45PH + X30SPAD +
+        X45.SPAd.VALUE + X45.D0Nod + LOP + NOPPC + DoS +
+        LoS + AoS + NSPP + NCPP + X100GSW + SY.Ha + B.ha + HI
+        '
+
+mod
+fit <- sem(mod, data = Bikas)
+semPaths(fit)
+?semPaths
+# Generate the plot using semPaths
+ semPaths(fit, 
+                whatLabels = "est.std", 
+                layout = "circle2", 
+                rotation = 1, 
+                curvePivot = TRUE, 
+                edge.label.cex = 1.5, 
+                edge.width = 2, 
+                label.cex = 1.2, 
+                nCharNodes = 10, 
+                legend = TRUE, 
+                legend.cex = 1.2,
+                edge.color = "darkgreen"
+)
